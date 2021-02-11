@@ -31,6 +31,7 @@
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="https" android:host="www.gymnash.com" />
 				<data android:scheme="https" android:host="referral.gymnash.com" />
 				<data android:scheme="https" android:host="attend.gymnash.com" />
 				<data android:scheme="https" android:host="gym.gymnash.com" />

@@ -89,11 +89,11 @@ abstract class Bloc {
 }
 
 class DeepLinkBloc extends Bloc {
-  //Event Channel creation
-  static const stream = const EventChannel('gmnsh.user.gymnash.com/events');
-
   //Method channel creation
-  static const platform = const MethodChannel('gmnsh.user.gymnash.com/channel');
+  static const platform = const MethodChannel("https.www.gymnash.com/channel");
+
+  //Event Channel creation
+  static const stream = const EventChannel("https.www.gymnash.com/events");
 
   StreamController<String> _stateController = StreamController();
 
