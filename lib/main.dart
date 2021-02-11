@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:geocoder/geocoder.dart';
-// import 'package:location/location.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:location/location.dart';
+import 'package:placesAPI/utils.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(PocApp());
@@ -12,22 +13,49 @@ class PocApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DeepLinkBloc _bloc = DeepLinkBloc();
+    Utilities.getDeviceDetails();
     return MaterialApp(
-        title: 'Flutter and Deep Link PoC',
+        title: 'Gymnash',
         theme: ThemeData(
             primarySwatch: Colors.blue,
             textTheme: TextTheme(
-              title: TextStyle(
+              headline2: TextStyle(
                 fontWeight: FontWeight.w300,
                 color: Colors.blue,
                 fontSize: 25.0,
               ),
             )),
         home: Scaffold(
-            body: Provider<DeepLinkBloc>(
-                create: (context) => _bloc,
-                dispose: (context, bloc) => bloc.dispose(),
-                child: PocWidget())));
+            body: Center(
+                child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Provider<DeepLinkBloc>(create: (context) => _bloc, dispose: (context, bloc) => bloc.dispose(), child: PocWidget()),
+            ElevatedButton(
+              child: Text('Get Location'),
+              onPressed: () {
+                Location().getLocation().then((location) {
+                  var coordinates = new Coordinates(location.latitude, location.longitude);
+                  coordinates = new Coordinates(21.2368966, 81.5983572);
+                  Geocoder.local.findAddressesFromCoordinates(coordinates).then((address) {
+                    print(address.first.toMap());
+                  });
+                });
+              },
+            ),
+            ElevatedButton(
+                child: Text('Get Permissions'),
+                onPressed: () {
+                  Location().requestPermission().then((permissionData) {
+                    print(permissionData);
+                  });
+                }),
+            // Row(
+            //   children: [
+            //   ],
+            // )
+          ],
+        ))));
   }
 }
 
@@ -39,17 +67,13 @@ class PocWidget extends StatelessWidget {
       stream: _bloc.state,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Container(
-              child: Center(
-                  child: Text('No deep link was used  ',
-                      style: Theme.of(context).textTheme.title)));
+          return Container(child: Center(child: Text('No deep link was used  ', style: Theme.of(context).textTheme.headline2)));
         } else {
           return Container(
               child: Center(
                   child: Padding(
                       padding: EdgeInsets.all(20.0),
-                      child: Text('Redirected: ${snapshot.data}',
-                          style: Theme.of(context).textTheme.title))));
+                      child: Text('Redirected: ${snapshot.data}', style: Theme.of(context).textTheme.headline2))));
         }
       },
     );

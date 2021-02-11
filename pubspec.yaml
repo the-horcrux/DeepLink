@@ -30,6 +30,8 @@ dependencies:
   provider: ^4.3.3
   location: ^3.0.2
   geocoder: ^0.2.1
+  equatable: ^1.2.6
+  device_info: ^1.0.0
 
 dev_dependencies:
   flutter_test:

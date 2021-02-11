@@ -11,15 +11,15 @@ import Flutter
   
   override func application(
     _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
 
-    let EVENTS = "https.www.gymnash.com/events"
     let CHANNEL = "https.www.gymnash.com/channel"
+    let EVENTS = "https.www.gymnash.com/events"
     
     let controller = window.rootViewController as! FlutterViewController
-    methodChannel = FlutterMethodChannel(name: EVENTS, binaryMessenger: controller.binaryMessenger)
-    eventChannel = FlutterEventChannel(name: , binaryMessenger: controller.binaryMessenger)
+    methodChannel = FlutterMethodChannel(name: CHANNEL, binaryMessenger: controller.binaryMessenger)
+    eventChannel = FlutterEventChannel(name: EVENTS, binaryMessenger: controller.binaryMessenger)
 
     
     methodChannel?.setMethodCallHandler({ (call: FlutterMethodCall, result: FlutterResult) in
@@ -35,7 +35,7 @@ import Flutter
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
   
-  override func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+  override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
     eventChannel?.setStreamHandler(linkStreamHandler)
     return linkStreamHandler.handleLink(url.absoluteString)
   }
