@@ -19,7 +19,7 @@ class PocApp extends StatelessWidget {
         theme: ThemeData(
             primarySwatch: Colors.blue,
             textTheme: TextTheme(
-              headline2: TextStyle(
+              headline1: TextStyle(
                 fontWeight: FontWeight.w300,
                 color: Colors.blue,
                 fontSize: 25.0,
@@ -67,13 +67,17 @@ class PocWidget extends StatelessWidget {
       stream: _bloc.state,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Container(child: Center(child: Text('No deep link was used  ', style: Theme.of(context).textTheme.headline2)));
+          return Container(
+              child: Center(
+                  child: Text('No deep link was used  ',
+                      style: Theme.of(context).textTheme.headline1)));
         } else {
           return Container(
               child: Center(
                   child: Padding(
                       padding: EdgeInsets.all(20.0),
-                      child: Text('Redirected: ${snapshot.data}', style: Theme.of(context).textTheme.headline2))));
+                      child: Text('Redirected: ${snapshot.data}',
+                          style: Theme.of(context).textTheme.headline1))));
         }
       },
     );
@@ -86,10 +90,10 @@ abstract class Bloc {
 
 class DeepLinkBloc extends Bloc {
   //Event Channel creation
-  static const stream = const EventChannel('https.www.gymnash.com/events');
+  static const stream = const EventChannel('gmnsh.user.gymnash.com/events');
 
   //Method channel creation
-  static const platform = const MethodChannel('https.www.gymnash.com/channel');
+  static const platform = const MethodChannel('gmnsh.user.gymnash.com/channel');
 
   StreamController<String> _stateController = StreamController();
 
